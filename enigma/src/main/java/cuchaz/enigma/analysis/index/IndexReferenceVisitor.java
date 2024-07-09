@@ -34,6 +34,7 @@ import cuchaz.enigma.translation.representation.entry.MethodEntry;
 import cuchaz.enigma.translation.representation.entry.ParentedEntry;
 
 public class IndexReferenceVisitor extends ClassVisitor {
+	private static final System.Logger log = System.getLogger(IndexReferenceVisitor.class.getName());
 	private final JarIndexer indexer;
 	private final EntryIndex entryIndex;
 	private final InheritanceIndex inheritanceIndex;
@@ -60,7 +61,7 @@ public class IndexReferenceVisitor extends ClassVisitor {
 			try {
 				new Analyzer<>(new MethodInterpreter(entry, indexer, entryIndex, inheritanceIndex)).analyze(className, methodNode);
 			} catch (AnalyzerException e) {
-				throw new RuntimeException(e);
+				log.log(System.Logger.Level.ERROR, "Failed to analyze method " + entry + " in class " + classEntry, e);
 			}
 		});
 	}
