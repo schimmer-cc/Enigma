@@ -59,7 +59,13 @@ public class BridgeMethodIndex implements JarIndexer {
 			}
 
 			MethodEntry renamedSpecializedEntry = specializedEntry.withName(bridgeEntry.getName());
-			specializedToBridge.put(renamedSpecializedEntry, specializedToBridge.get(specializedEntry));
+			MethodEntry renamedSpecializedEntryBridge = specializedToBridge.get(specializedEntry);
+
+			if (renamedSpecializedEntryBridge.equals(renamedSpecializedEntry)) {
+				continue;
+			}
+
+			specializedToBridge.put(renamedSpecializedEntry, renamedSpecializedEntryBridge);
 		}
 	}
 
